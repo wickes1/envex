@@ -8,5 +8,40 @@ Envex (Env Example) is a command-line tool written in Go for generating sample d
 go install github.com/wickes1/envex
 
 envex generate
-# Sample dotenv file generated successfully!
+# Sample dotenv file has been saved to: .env.example
+```
+
+## Example
+
+Given the following `.env` file:
+
+```env
+# Example dotenv
+
+# Database
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=secret
+DB_NAME=database
+
+# App
+
+APP_NAME=MyApp
+APP_ENV=development
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+```
+
+Running `envex generate` will generate the following `.env.example` file:
+
+```env
+DB_HOST=
+DB_USER=
+DB_PASS=
+DB_NAME=
+APP_NAME=
+APP_ENV=
+APP_DEBUG=
+APP_URL=
 ```
