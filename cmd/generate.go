@@ -24,7 +24,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var outputFileName string
+var (
+	inputFileName  string
+	outputFileName string
+)
 
 // generateCmd represents the generate command
 var generateCmd = &cobra.Command{
@@ -33,8 +36,8 @@ var generateCmd = &cobra.Command{
 	Long: `Generate a sample dotenv file (.env.example) or a custom output file based on an existing .env file.
 The generated file will contain the keys from the .env file with empty values.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Open the existing .env file
-		envFile, err := os.Open(".env")
+		// Open the input .env file
+		envFile, err := os.Open(inputFileName)
 		if err != nil {
 			fmt.Println("Error opening .env file:", err)
 			return
@@ -42,7 +45,6 @@ The generated file will contain the keys from the .env file with empty values.`,
 		defer envFile.Close()
 
 		// Determine the output file name
-		outputFileName, _ := cmd.Flags().GetString("output")
 		if outputFileName == "" {
 			outputFileName = ".env.example"
 		}
@@ -80,6 +82,7 @@ The generated file will contain the keys from the .env file with empty values.`,
 func init() {
 	rootCmd.AddCommand(generateCmd)
 
-	// Add a flag for specifying the output file name
+	// Add flags for specifying the input and output file names
+	generateCmd.Flags().StringVarP(&inputFileName, "file", "f", ".env", "Input file name (existing .env file)")
 	generateCmd.Flags().StringVarP(&outputFileName, "output", "o", "", "Output file name for the sample dotenv file")
 }
