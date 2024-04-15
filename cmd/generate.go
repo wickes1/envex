@@ -27,6 +27,7 @@ import (
 var (
 	inputFileName  string
 	outputFileName string
+	retainComments bool
 )
 
 // generateCmd represents the generate command
@@ -61,12 +62,28 @@ The generated file will contain the keys from the .env file with empty values.`,
 		scanner := bufio.NewScanner(envFile)
 		for scanner.Scan() {
 			line := scanner.Text()
-			// Split the line into key-value pair
+
+			// Skip empty lines and comments
+			if line == "" || strings.HasPrefix(line, "#") {
+				if retainComments {
+					_, _ = sampleFile.WriteString(line + "\n")
+				}
+				continue
+			}
+
+			// Split the line into key and value
 			parts := strings.SplitN(line, "=", 2)
-			if len(parts) == 2 {
-				key := strings.TrimSpace(parts[0])
-				// Write key to the sample dotenv file
-				fmt.Fprintf(sampleFile, "%s=\n", key)
+			key := parts[0]
+
+			// Write the key with an empty value to the sample file
+			_, _ = sampleFile.WriteString(key + "=\n")
+
+			// If the line contains a comment, write the comment to the sample file
+			if len(parts) > 1 {
+				comment := strings.TrimSpace(parts[1])
+				if strings.HasPrefix(comment, "#") {
+					_, _ = sampleFile.WriteString(comment + "\n")
+				}
 			}
 		}
 
@@ -85,4 +102,5 @@ func init() {
 	// Add flags for specifying the input and output file names
 	generateCmd.Flags().StringVarP(&inputFileName, "file", "f", ".env", "Input file name (existing .env file)")
 	generateCmd.Flags().StringVarP(&outputFileName, "output", "o", "", "Output file name for the sample dotenv file")
+	generateCmd.Flags().BoolVarP(&retainComments, "comments", "c", false, "Retain comments from the original .env file")
 }
