@@ -82,3 +82,11 @@ aurs:
     license: Apache
     private_key: "{{ .Env.AUR_KEY }}"
     git_url: ssh://aur@aur.archlinux.org/envex-bin.git
+
+# publish to homebrew
+brews:
+  - homepage: https://github.com/wickes1/envex
+    description: A CLI tool for generating sample dotenv files from existing .env configurations
+    directory: Formula
+    goarm: "7"
+    license: Apache
