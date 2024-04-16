@@ -2,6 +2,24 @@
 
 Envex (Env Example) is a command-line tool written in Go for generating sample dotenv files from existing `.env` files. It helps streamline the process of creating sample environment configuration files for your projects.
 
+## Installation
+
+### Go
+
+You can install Envex directly from Go:
+
+```bash
+go install github.com/wickes1/envex@latest
+```
+
+### Arch User Repository (AUR)
+
+If you're using an Arch-based Linux distribution, you can install Envex from the AUR:
+
+```bash
+yay -S envex-bin
+```
+
 ## Usage
 
 ```bash

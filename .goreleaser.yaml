@@ -78,7 +78,7 @@ aurs:
   - homepage: https://github.com/wickes1/envex
     description: A CLI tool for generating sample dotenv files from existing .env configurations
     maintainers:
-      - "Wickes1 <27881570+wickes1at users.noreply.github.com>"
+      - "Wickes1 <27881570+wickes1 at users.noreply.github.com>"
     license: Apache
     private_key: "{{ .Env.AUR_KEY }}"
     git_url: ssh://aur@aur.archlinux.org/envex-bin.git
